@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<laboratorios>
+  <laboratorio id="5fdd0c4d7d999">
+    <name>LAMSA Laboratorio</name>
+    <adress>Av Italia, km 8</adress>
+    <phone>999999999</phone>
+    <email>laboratorio@email.com</email>
+    <CNPJ>999999999</CNPJ>
+    <password>0000</password>
+    <exames>
+      <exame>Radiografia</exame>
+      <exame>Tomografia</exame>
+      <exame>Mamografia</exame>
+      <exame>Eletroencefalografia</exame>
+    </exames>
+  </laboratorio>
+</laboratorios>

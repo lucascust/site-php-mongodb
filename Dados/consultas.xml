@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<consultas>
+  <consulta id="5fdd0e1275bd9">
+    <namePatient>Ubaldo Paciente</namePatient>
+    <nameDoctor>Diana Medica</nameDoctor>
+    <emailPatient>paciente@email.com</emailPatient>
+    <emailDoctor>medico@email.com</emailDoctor>
+    <date>2020-12-17</date>
+    <hour>8</hour>
+    <prescription/>
+    <observations/>
+  </consulta>
+  <consulta id="5fdd0ef31714f">
+    <namePatient>Ubaldo Paciente</namePatient>
+    <nameDoctor>Diana Medica</nameDoctor>
+    <emailPatient>paciente@email.com</emailPatient>
+    <emailDoctor>medico@email.com</emailDoctor>
+    <date>2020-12-24</date>
+    <hour>14</hour>
+    <prescription/>
+    <observations/>
+  </consulta>
+  <consulta id="5fdd0f1038297">
+    <namePatient>Ubaldo Paciente</namePatient>
+    <nameDoctor>Diana Medica</nameDoctor>
+    <emailPatient>paciente@email.com</emailPatient>
+    <emailDoctor>medico@email.com</emailDoctor>
+    <date>2020-12-25</date>
+    <hour>16</hour>
+    <prescription/>
+    <observations/>
+  </consulta>
+</consultas>

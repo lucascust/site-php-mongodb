@@ -1,0 +1,32 @@
+body{
+    margin: 3vw;
+    position: relative;
+  }
+  
+  *{
+    font-family: Verdana, sans-serif;
+  }
+  
+  input[type=submit] {
+    width: 150px;
+    background-color: #2b2c2e;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  input[type=submit]:hover {
+    background-color: #1d2468;
+  }
+  
+  .block {
+      border-radius: 5px;
+      background-color: #f2f2f2;
+      padding: 20px;
+      margin: 2vw;
+      float: left;
+  }
+  

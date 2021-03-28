@@ -1,0 +1,66 @@
+body{
+    background: #bfd8e7;
+}
+hr{
+    margin: 2px;
+}
+
+.header{
+    background-color: #386FA4;
+    border-radius: 3px;
+    height: 80px;
+}
+.header h1{
+    padding: 19px;
+    margin: 0 auto;
+    text-align: center;
+    color: #84D2F6;
+}
+
+.container{
+    width: 400px;
+    min-height: 380px;    
+    margin: 0px auto;
+    position: relative;   
+    background: rgb(247, 247, 247);
+    border: 1px solid rgba(147, 184, 189,0.8);
+    border-radius: 5px;
+}
+
+h3{
+    margin-left: 15px;
+}
+
+label{
+    margin-left: 15px;
+}
+
+input[type=text], input[type=password]{
+    width: 93%;
+    margin-left: 3%;
+}
+
+input[type=submit]{
+    margin-top: 8% !important;
+    width: 46% !important;
+}
+
+#adm-submit {
+    margin-top: 2% !important;
+}
+
+#adm-form {
+    margin: 2% 2% 7% 2% !important;
+}
+
+#adm-button {
+    margin-top: 0 !important;
+}
+
+#adm-container {
+    min-height: 475px;    
+}
+
+h4 {
+    margin-left: 15px;
+}

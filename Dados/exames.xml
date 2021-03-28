@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exames>
+  <exame id="5fdd0f5511783">
+    <namePatient>Ubaldo Paciente</namePatient>
+    <nameLab>LAMSA Laboratorio</nameLab>
+    <emailPaciente>paciente@email.com</emailPaciente>
+    <emailLaboratorio>laboratorio@email.com</emailLaboratorio>
+    <exame>Mamografia</exame>
+    <date>2020-12-28</date>
+    <hour>11</hour>
+    <resultado>Em análise</resultado>
+  </exame>
+  <exame id="5fdd0fc9e2869">
+    <namePatient>Ubaldo Paciente</namePatient>
+    <nameLab>LAMSA Laboratorio</nameLab>
+    <emailPaciente>paciente@email.com</emailPaciente>
+    <emailLaboratorio>laboratorio@email.com</emailLaboratorio>
+    <exame>Eletroencefalografia</exame>
+    <date>2020-12-26</date>
+    <hour>14.5</hour>
+    <resultado>Em análise</resultado>
+  </exame>
+</exames>

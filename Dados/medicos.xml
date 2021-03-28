@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<medicos>
+  <medico id="5fdd0bb6d7f94">
+    <name>Diana Medica</name>
+    <adress>Rua legal, 0</adress>
+    <phone>9999999999</phone>
+    <email>medico@email.com</email>
+    <gender>feminino</gender>
+    <age>35</age>
+    <CRM>9999999999</CRM>
+    <specialty>Neurologia</specialty>
+    <password>0000</password>
+  </medico>
+</medicos>

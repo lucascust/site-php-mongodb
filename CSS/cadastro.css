@@ -1,0 +1,65 @@
+
+hr{
+    margin: 2px;
+}
+
+.header{
+    background-color: #386FA4;
+    border-radius: 3px;
+    height: 80px;
+}
+.header h1{
+    padding: 19px;
+    margin: 0 auto;
+    text-align: center;
+    color: #84D2F6;
+}
+
+.container{
+    width: 400px;
+    min-height: 390px;    
+    margin: 0px auto;
+    position: relative;   
+    background: rgb(247, 247, 247);
+    border: 1px solid rgba(147, 184, 189,0.8);
+    border-radius: 5px;
+}
+h3{
+    margin-left: 15px;
+}
+form {
+    margin-left: 20px;
+}
+
+.form-group{
+    margin-left: 10px;
+}
+
+input[type=radio]{
+    margin-left: 1%;
+}
+
+input[type=text], input[type=password]{
+    width: 315px;
+}
+
+#exam-list{
+    width: 315px;
+}
+
+#remove-button{
+    width: auto;
+    background-color: #1D3752;
+    color: white;
+    padding: 1px;
+    margin: 0;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    float: right;
+    bottom: 0;
+}
+                                            
+#remove-button:hover{
+    background-color: rgb(247, 82, 82);
+}

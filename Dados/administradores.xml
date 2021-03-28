@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<administradores>
+  <administrador id="5fdd0a678c6e3">
+    <name>admin</name>
+    <email>admin@email.com</email>
+    <password>0000</password>
+  </administrador>
+</administradores>

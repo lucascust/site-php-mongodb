@@ -1,0 +1,45 @@
+body{
+  background-color: white;
+}
+
+
+
+h1, h3{
+  font-family: Verdana, sans-serif;
+}
+
+
+#tabela{
+  border-collapse: collapse;
+  margin-left: 8px;
+}
+
+#tabela tr:hover {
+  background-color: #59A5D8;
+}
+#tabela th {
+  min-width: 100px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  background-color: #3662b4;
+  color: white;
+}
+
+td {
+  border: 1px solid #dddddd;
+  text-align: center;
+  padding: 8px;
+  padding-left: 2vw;
+  padding-right: 2vw;
+}
+tr:nth-child(even) {
+  background-color: #c3d9e4;
+}
+
+.observations{
+  min-width: 100px;
+}
+
+.prescription{
+  min-width: 50px
+}

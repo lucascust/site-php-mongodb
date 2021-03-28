@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pacientes>
+  <paciente id="5fdd0bfada7dc">
+    <name>Ubaldo Paciente</name>
+    <adress>Gatolandia, 0</adress>
+    <phone>9999999999</phone>
+    <email>paciente@email.com</email>
+    <gender>male</gender>
+    <age>5</age>
+    <cpf>9999999999</cpf>
+    <password>0000</password>
+  </paciente>
+</pacientes>

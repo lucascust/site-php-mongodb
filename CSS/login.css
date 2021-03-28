@@ -1,0 +1,51 @@
+body{
+    background: #bfd8e7;
+}
+hr{
+    margin: 2px;
+}
+
+.header{
+    background-color: #386FA4;
+    border-radius: 3px;
+    height: 80px;
+}
+.header h1{
+    padding: 19px;
+    margin: 0 auto;
+    text-align: center;
+    color: #84D2F6;
+}
+
+.container{
+    width: 400px;
+    min-height: 390px;    
+    margin: 0px auto;
+    position: relative;   
+    background: rgb(247, 247, 247);
+    border: 1px solid rgba(147, 184, 189,0.8);
+    border-radius: 5px;
+}
+h3{
+    margin-left: 15px;
+}
+
+input[type=submit]{
+    width: 46%;
+}
+
+#admbutton{
+    width: 96% !important;
+}
+
+#formsubmit{
+    margin-top: 50px;
+}
+
+#form{
+    margin-bottom: 42px;
+}
+
+input[type=radio]{
+   margin-left: 7%;
+}
