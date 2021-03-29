@@ -8,6 +8,7 @@
 <body>
     
     <?php
+    include('../config.php');
 
     $anyErr = false;
     $emailErr = $dateErr = $hourErr = "";
@@ -31,40 +32,43 @@
     // Entrada: (Email do usuário, tipo: paciente, laboratorio, medico)
     // Saída: nome do usuário | false
     function getName($email, $userType){
-        $xml = simplexml_load_file("../Dados/${userType}s.xml");
 
-        for ($i = 0; $i < $xml->count(); $i++) {
+        $DBManager = new MongoDB\Driver\Manager(server);
 
-            $xmlEmail = $xml->$userType[$i]->email;
-            echo $xmlEmail;
-            echo $email;
-            if ($email == $xmlEmail){
-                return $xml->$userType->name;
+        $filter = [ 'email' => $email ];
+        $query = new MongoDB\Driver\Query($filter); 
+         
+        $res = $DBManager->executeQuery("planoSaude.${userType}s", $query);
+
+        $name = false;
+        foreach($res as $document) {
+            if ($document->name){
+                $name = $document->name;
             }
-
         }
-        return false;
+
+        return $name;
     
     }
+
 
     function verifyExistance($date, $hour)
     {
         
-        $xml = simplexml_load_file("../Dados/consultas.xml");
-
-        for ($i = 0; $i < $xml->count(); $i++) {
-            
-            $xmlDate = $xml->consulta[$i]->date;
-            $xmlHour = $xml->consulta[$i]->hour;
-
-            if ($hour == $xmlHour and $date == $xmlDate) {
-                return true;
-            } 
-        }
+        $DBManager = new MongoDB\Driver\Manager(server);
         
+        $filter = [ 'date' => $date, 'hour' => $hour]; 
+        $query = new MongoDB\Driver\Query($filter); 
+
+         
+        $res = $DBManager->executeQuery("planoSaude.consulta", $query);
+        $res = current($res->toArray());
+
+        if(!empty($res)){
+            return true;
+        }
         return false;
     }
-
 
     
     if ($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -101,40 +105,37 @@
                 
                 //geração de id como pk
                 $id =  uniqid();
-                
-                
-                $xml = simplexml_load_file("../Dados/consultas.xml");
-                
+
                 $user_name = getName($email, "paciente");
                 $doctor_name = getName($_COOKIE["medico"], "medico");
 
                 if(!$user_name){
-                    alertBox("O paciente não cadastrado. Por favor, cadastre o paciente.");
+                    alertBox("O paciente não cadastrado. Por favor, cadastre o paciente. ${user_name}");
 
                     redirect("../Profiles/medicos.php");
                     return 0;
                 }
+                
 
-                //Cria um elemento
-                $child = $xml->addChild('consulta');
+                $DBManager = new MongoDB\Driver\Manager(server);
+                $bulk = new MongoDB\Driver\BulkWrite;
                 
-                //Adiciona "Colunas"
-                $child->addAttribute("id", $id);
-                $child->addChild('namePatient',$user_name);
-                $child->addChild('nameDoctor',$doctor_name);
-                $child->addChild('emailPatient',$email);
-                $child->addChild('emailDoctor',$_COOKIE["medico"]);
-                $child->addChild('date',$date);
-                $child->addChild('hour',$hour);
-                $child->addChild('prescription', '');
-                $child->addChild('observations', '');
+
+                $doc = [
+                    "id" => $id,
+                    'namePatient'=>$user_name,
+                    'nameDoctor'=>$doctor_name,
+                    'emailPatient'=>$email,
+                    'emailDoctor'=>$_COOKIE["medico"],
+                    'date'=>$date,
+                    'hour'=>$hour,
+                    'prescription'=> '',
+                    'observations'=> '',
+                ];
                 
-                // Configuração para identar corretamente
-                $dom = dom_import_simplexml($xml)->ownerDocument;
-                $dom->formatOutput = true;
-                $dom->preserveWhiteSpace = false;
-                $dom->loadXML( $dom->saveXML());
-                $dom->save("../Dados/consultas.xml");
+                $bulk->insert($doc);
+                
+                $DBManager->executeBulkWrite('planoSaude.consultas', $bulk);
 
                 alertBox("Consulta marcada com sucesso!");
                 redirect("../Profiles/medicos.php");

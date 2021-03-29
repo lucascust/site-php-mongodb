@@ -8,6 +8,9 @@
 <body>
     
     <?php
+    include('../config.php');
+
+
     $anyErr = false;
     $nameErr = $emailErr = $passwordErr = "";
     $phoneErr = $genderErr = $examTypesErr = $adressErr = "";
@@ -114,38 +117,31 @@
         }
 
         if( !$anyErr ){
-            if( !verifyExistance($name) ){
+            if( !verifyExistance($email, 'laboratorio')){
+                
                 //geração de id como pk
                 $id =  uniqid();
-
-
-                $xml = simplexml_load_file("../Dados/laboratorios.xml");
-
-                //Cria um elemento
-                $child = $xml->addChild('laboratorio');
-
-                //Adiciona "Colunas"
-                $child->addAttribute("id", $id);
-                $child->addChild('name',$name);
-                $child->addChild('adress',$adress);
-                $child->addChild('phone',$phone);
-                $child->addChild('email',$email);
-                $child->addChild('CNPJ',$CNPJ);
-                $child->addChild('password',$password);
-
-                $exams = $child->addChild('exames');
-                foreach($_POST['check_list'] as $exam) {
-                    $exams->addChild('exame', $exam);
-                }
-
                 
-                // Configuração para identar corretamente
-                $dom = dom_import_simplexml($xml)->ownerDocument;
-                $dom->formatOutput = true;
-                $dom->preserveWhiteSpace = false;
-                $dom->loadXML( $dom->saveXML());
-                $dom->save("../Dados/laboratorios.xml");
+                $DBManager = new MongoDB\Driver\Manager(server);
+                $bulk = new MongoDB\Driver\BulkWrite;
+                
 
+                $doc = [
+                    "id" => $id,
+                    'name' => $name,
+                    'adress' => $adress,
+                    'phone' => $phone,
+                    'email' => $email,
+                    'CNPJ' => $CNPJ,
+                    'password' => $password,
+                    'exames' => $_POST['check_list']
+                ];
+                
+                $bulk->insert($doc);
+                
+                $DBManager->executeBulkWrite('planoSaude.laboratorios', $bulk);
+                
+                
                 alertBox("Cadastro realizado com sucesso!");
 
                 redirect('../Profiles/administradores.php');

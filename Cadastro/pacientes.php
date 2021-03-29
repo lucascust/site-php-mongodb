@@ -8,6 +8,8 @@
 <body>
     
     <?php
+    include('../config.php');
+
 
     $anyErr = false;
     $nameErr = $emailErr = $ageErr = $passwordErr = "";
@@ -29,25 +31,25 @@
     }  
 
     // Verifica existência pelo nome
-    function verifyExistance($signUpName)
+    function verifyExistance($signUpName, $collection)
     {
         $signUpName = strtolower($signUpName);
-
-        $xml = simplexml_load_file("../Dados/pacientes.xml");
-
-        for ($i = 0; $i < $xml->count(); $i++) {
-
-            $xmlName = $xml->paciente[$i]->name;
-            $xmlName = strtolower($xmlName);
-
-            if ($signUpName == $xmlName) {
-                return true;
-            } 
-        }
         
+        $DBManager = new MongoDB\Driver\Manager(server);
+        
+        $filter = [ 'email' => $signUpName ]; 
+        $query = new MongoDB\Driver\Query($filter); 
+
+         
+        $res = $DBManager->executeQuery("planoSaude.${collection}", $query);
+        
+        $res = current($res->toArray());
+
+        if(!empty($res)){
+            return true;
+        }
         return false;
     }
-
 
     
     if ($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -132,36 +134,31 @@
         }
 
         if( !$anyErr ){
-            if( !verifyExistance($name) ){
+            if( !verifyExistance($email, 'paciente')){
                 
                 //geração de id como pk
                 $id =  uniqid();
                 
+                $DBManager = new MongoDB\Driver\Manager(server);
+                $bulk = new MongoDB\Driver\BulkWrite;
                 
-                $xml = simplexml_load_file("../Dados/pacientes.xml");
+
+                $doc = [
+                    "id" => $id,
+                    'name' => $name,
+                    'adress' => $adress,
+                    'phone' => $phone,
+                    'email' => $email,
+                    'gender' => $gender,
+                    'age' => $age,
+                    'cpf' => $cpf,
+                    'password' => $password,
+                ];
                 
-                echo $xml;
+                $bulk->insert($doc);
                 
-                //Cria um elemento
-                $child = $xml->addChild('paciente');
+                $DBManager->executeBulkWrite('planoSaude.pacientes', $bulk);
                 
-                //Adiciona "Colunas"
-                $child->addAttribute("id", $id);
-                $child->addChild('name',$name);
-                $child->addChild('adress',$adress);
-                $child->addChild('phone',$phone);
-                $child->addChild('email',$email);
-                $child->addChild('gender',$gender);
-                $child->addChild('age',$age);
-                $child->addChild('cpf',$cpf);
-                $child->addChild('password',$password);
-                
-                // Configuração para identar corretamente
-                $dom = dom_import_simplexml($xml)->ownerDocument;
-                $dom->formatOutput = true;
-                $dom->preserveWhiteSpace = false;
-                $dom->loadXML( $dom->saveXML());
-                $dom->save("../Dados/pacientes.xml");
 
                 alertBox("Cadastro realizado com sucesso!");
 

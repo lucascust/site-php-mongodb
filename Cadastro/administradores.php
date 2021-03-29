@@ -8,6 +8,8 @@
     
     <?php
 
+    include("../config.php")
+
     $anyErr = false;
     $nameErr = $emailErr = $passwordErr = "";
     $name = $email = $password = "";
@@ -23,22 +25,23 @@
     return $data;
     }  
 
-    function verifyExistance($signUpName)
+    function verifyExistance($signUpName, $collection)
     {
         $signUpName = strtolower($signUpName);
-
-        $xml = simplexml_load_file("../Dados/administradores.xml");
-
-        for ($i = 0; $i < $xml->count(); $i++) {
-
-            $xmlName = $xml->administrador[$i]->name;
-            $xmlName = strtolower($xmlName);
-
-            if ($signUpName == $xmlName) {
-                return true;
-            } 
-        }
         
+        $DBManager = new MongoDB\Driver\Manager(server);
+        
+        $filter = [ 'email' => $signUpName ]; 
+        $query = new MongoDB\Driver\Query($filter); 
+
+         
+        $res = $DBManager->executeQuery("planoSaude.${collection}", $query);
+        
+        $res = current($res->toArray());
+
+        if(!empty($res)){
+            return true;
+        }
         return false;
     }
 
@@ -80,31 +83,25 @@
         }
 
         if( !$anyErr ){
-            if( !verifyExistance($name) ){
+            if( !verifyExistance($name, 'administradores') ){
                 
                 //geração de id como pk
                 $id =  uniqid();
                 
+                $DBManager = new MongoDB\Driver\Manager(server);
+                $bulk = new MongoDB\Driver\BulkWrite;
                 
-                $xml = simplexml_load_file("../Dados/administradores.xml");
+
+                $doc = [
+                    "id" => $id,
+                    'name' => $name,
+                    'email' => $email,
+                    'password' => $password,
+                ];
                 
-                echo $xml;
+                $bulk->insert($doc);
                 
-                //Cria um elemento
-                $child = $xml->addChild('administrador');
-                
-                //Adiciona "Colunas"
-                $child->addAttribute("id", $id);
-                $child->addChild('name',$name);
-                $child->addChild('email',$email);
-                $child->addChild('password',$password);
-                
-                // Configuração para identar corretamente e salvar
-                $dom = dom_import_simplexml($xml)->ownerDocument;
-                $dom->formatOutput = true;
-                $dom->preserveWhiteSpace = false;
-                $dom->loadXML( $dom->saveXML());
-                $dom->save("../Dados/administradores.xml");
+                $DBManager->executeBulkWrite('planoSaude.administradores', $bulk);
 
                 alertBox("Cadastro realizado com sucesso!");
 
