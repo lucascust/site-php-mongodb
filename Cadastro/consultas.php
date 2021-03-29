@@ -110,7 +110,7 @@
                 $doctor_name = getName($_COOKIE["medico"], "medico");
 
                 if(!$user_name){
-                    alertBox("O paciente não cadastrado. Por favor, cadastre o paciente. ${user_name}");
+                    alertBox("O paciente não cadastrado. Por favor, contate o administrador.");
 
                     redirect("../Profiles/medicos.php");
                     return 0;

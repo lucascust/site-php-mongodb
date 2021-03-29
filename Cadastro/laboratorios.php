@@ -32,22 +32,23 @@
     }
 
     // Verifica existencia pelo nome
-    function verifyExistance($signUpName)
+    function verifyExistance($signUpName, $collection)
     {
         $signUpName = strtolower($signUpName);
-
-        $xml = simplexml_load_file("../Dados/laboratorios.xml");
-
-        for ($i = 0; $i < $xml->count(); $i++) {
-
-            $xmlName = $xml->laboratorio[$i]->name;
-            $xmlName = strtolower($xmlName);
-
-            if ($signUpName == $xmlName) {
-                return true;
-            } 
-        }
         
+        $DBManager = new MongoDB\Driver\Manager(server);
+        
+        $filter = [ 'email' => $signUpName ]; 
+        $query = new MongoDB\Driver\Query($filter); 
+
+         
+        $res = $DBManager->executeQuery("planoSaude.${collection}", $query);
+        
+        $res = current($res->toArray());
+
+        if(!empty($res)){
+            return true;
+        }
         return false;
     }
     
