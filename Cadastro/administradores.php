@@ -8,7 +8,7 @@
     
     <?php
 
-    include("../config.php")
+    include("../config.php");
 
     $anyErr = false;
     $nameErr = $emailErr = $passwordErr = "";

@@ -117,7 +117,7 @@
                 $id =  uniqid();
 
                 $user_name = getName($email, "paciente");
-                $doctor_name = getName($_COOKIE["laboratorio"], "laboratorio");
+                $lab_name = getName($_COOKIE["laboratorio"], "laboratorio");
 
                 if(!$user_name){
                     alertBox("O paciente não cadastrado. Por favor, contate o administrador.");

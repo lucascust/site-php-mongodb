@@ -8,7 +8,8 @@
 
 <body>
     <?php
-
+    include('../config.php');
+    
     function alertBox($alertText)
     {
         echo "<script>alert('${alertText}');</script>";
@@ -34,7 +35,13 @@
             redirect("../index.php");
         }
     }
-    $xml = simplexml_load_file("../Dados/consultas.xml");
+
+    $DBManager = new MongoDB\Driver\Manager(server);
+            
+    $filter = []; 
+    $query = new MongoDB\Driver\Query($filter); 
+        
+    $res = $DBManager->executeQuery("planoSaude.consultas", $query);
 
     ?>
 
@@ -61,7 +68,7 @@
             </tr>
         </thead>
         <tbody> 
-        <?php foreach ($xml->consulta as $consulta):
+        <?php foreach ($res as $consulta):
             if($_COOKIE["medico"] == $consulta->emailDoctor):?>
                 <tr>
                     <td><?php echo $consulta->namePatient; ?></td>

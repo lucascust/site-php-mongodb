@@ -8,7 +8,7 @@
 
 <body>
     <?php
-    
+    include('../config.php');
     
     function alertBox($alertText)
     {
@@ -36,9 +36,13 @@
         }
     }
 
-    $xml = simplexml_load_file("../Dados/consultas.xml");
-    $xmlExame = simplexml_load_file("../Dados/exames.xml");
-
+    $DBManager = new MongoDB\Driver\Manager(server);
+            
+    $filter = []; 
+    $query = new MongoDB\Driver\Query($filter); 
+        
+    $res = $DBManager->executeQuery("planoSaude.consultas", $query);
+    $resExame = $DBManager->executeQuery("planoSaude.exames", $query);
 
     ?>
 
@@ -61,7 +65,7 @@
             </tr>
         </thead>
         <tbody> 
-        <?php foreach ($xml->consulta as $consulta):
+        <?php foreach ($res as $consulta):
             if($_COOKIE["paciente"] == $consulta->emailPatient):?>
                 <tr>
                     <td><?php echo $consulta->nameDoctor; ?></td>
@@ -88,7 +92,7 @@
             </tr>
         </thead>
         <tbody> 
-        <?php foreach ($xmlExame->exame as $exame):
+        <?php foreach ($resExame as $exame):
             if($_COOKIE["paciente"] == $exame->emailPaciente):?>
                 <tr>
                     <td><?php echo $exame->nameLab; ?></td>

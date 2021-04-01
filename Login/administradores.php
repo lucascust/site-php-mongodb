@@ -7,6 +7,8 @@
 
 <body>
     <?php
+        include('../config.php');
+
         $loginErr = "";
         $email = $password = "";
 
@@ -18,17 +20,22 @@
             echo "<script> window.location.href = '{$url}'; </script>";
         }
         
+
         function verifyNamePassword($email, $password, $userType)
         {
-    
-            $xml = simplexml_load_file("../Dados/{$userType}.xml") or die("Error: Cannot create object");
-    
-            for ($i = 0; $i < $xml->count(); $i++) {
-    
-                $xmlEmail = $xml->administrador[$i]->email;
-
-                if ($email == $xmlEmail) {
-                    if($password == $xml->administrador[$i]->password){
+            $email = strtolower($email);
+            
+            $DBManager = new MongoDB\Driver\Manager(server);
+            
+            $filter = [ 'email' => $email]; 
+            $query = new MongoDB\Driver\Query($filter); 
+             
+            $res = $DBManager->executeQuery("planoSaude.${userType}", $query);
+            
+            
+            foreach($res as $document) {
+                if ($document->name){
+                    if ($document->password == $password){
                         alertBox("Logado com sucesso!");
                         return 1;
                     } else {
@@ -36,13 +43,12 @@
                         return 0;
                     }
                 }
+                
             }
-    
             alertBox("Usuário não existe!");
-    
             return 0;
+ 
         }
-
 
         if ($_SERVER["REQUEST_METHOD"] == "POST"){
             if(empty($_POST["email"]) or empty($_POST["password"])){

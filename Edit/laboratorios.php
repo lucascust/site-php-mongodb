@@ -7,22 +7,21 @@
 
 <body>
     <?php
+        include('../config.php');
+
         $anyErr = false;
         $nameErr = $emailErr = $ageErr = $phoneErr = $examErr = $CNPJErr = "";
         
         $name = $adress = $email = $exame = $password = $phone = $CNPJ = $specialty = "";
 
-        $xml = simplexml_load_file("../Dados/laboratorios.xml"); 
         
-        for ($i = 0; $i < $xml->count(); $i++) {
+        $DBManager = new MongoDB\Driver\Manager(server);
+                
+        $filter = ['email' => $_COOKIE['laboratorio']]; 
+        $query = new MongoDB\Driver\Query($filter); 
+            
+        $res = $DBManager->executeQuery("planoSaude.laboratorios", $query);
     
-            $laboratorioXml = $xml->laboratorio[$i]->email;
-
-            if ($_COOKIE['laboratorio'] == $laboratorioXml) {
-                $laboratorioId = $i;
-                break;
-            }
-        }
 
 
         function alertBox($alertText) {
@@ -44,9 +43,7 @@
         
             // Perimeiro verifica se o input foi do botão de remover exame
             if(!empty($_POST["remove"])){
-                
-                // Gambiarra:
-                for ($i = 0; $i < $xml->laboratorio[$laboratorioId]->exames->count(); $i++) {
+                si = 0; $i < $xml->laboratorio[$laboratorioId]->exames->count(); $i++) {
     
                     $exameXml = $xml->laboratorio[$laboratorioId]->exames->exame[$i];
                     echo $exameXml;

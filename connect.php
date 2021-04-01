@@ -24,4 +24,8 @@ $doc = [
 $bulk->insert($doc);
 
 $DBManager->executeBulkWrite('planoSaude.laboratorios', $bulk);
+
+
+$res = current($res->toArray());
+
 ?>
