@@ -135,7 +135,7 @@
                     "id" => $id,
                     'namePatient' => $user_name,
                     'nameLab' => $lab_name,
-                    'emailPaciente' => $email,
+                    'emailPatient' => $email,
                     'emailLaboratorio' => $_COOKIE["laboratorio"],
                     'exame' => $exam,
                     'date' => $date,

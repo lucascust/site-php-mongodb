@@ -16,19 +16,19 @@
 
 
     if (isset($_COOKIE['administrador'])) {
-        redirect("../Profiles/administradores.php");
+        redirect("./Profiles/administradores.php");
     }
 
     if (isset($_COOKIE['laboratorio'])) {
-        redirect("../Profiles/laboratorios.php");
+        redirect("./Profiles/laboratorios.php");
     }
 
     if (isset($_COOKIE['medico'])) {
-        redirect("../Profiles/medicos.php");
+        redirect("./Profiles/medicos.php");
     }
 
     if (isset($_COOKIE['paciente'])) {
-        redirect("../Profiles/pacientes.php");
+        redirect("./Profiles/pacientes.php");
     }
 
     $user = "";

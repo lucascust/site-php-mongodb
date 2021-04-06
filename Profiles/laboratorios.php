@@ -40,7 +40,7 @@
     
     $DBManager = new MongoDB\Driver\Manager(server);
             
-    $filter = []; 
+    $filter = [ 'emailLaboratorio'=>$_COOKIE['laboratorio']]; 
     $query = new MongoDB\Driver\Query($filter); 
         
     $res = $DBManager->executeQuery("planoSaude.exames", $query);
@@ -56,6 +56,14 @@
     <h3>
     Seus Exames:
     </h3>
+
+    Você possui 
+    <?php
+    $cursor = $DBManager->executeQuery("planoSaude.exames", $query);
+    $cursorArray = $cursor->toArray();
+    echo count($cursorArray);
+    ?>
+    exame(s).
 
     <div class="table-container">
 
@@ -75,7 +83,7 @@
                 if($_COOKIE["laboratorio"] == $exame->emailLaboratorio):?>
                     <tr>
                         <td><?php echo $exame->namePatient; ?></td>
-                        <td><?php echo $exame->emailPaciente; ?></td>
+                        <td><?php echo $exame->emailPatient; ?></td>
                         <td><?php echo $exame->exame; ?></td>
                         <td><?php echo $exame->date; ?></td>
                         <td><?php echo (float) $exame->hour !== floor($exame->hour) ? strval(intval($exame->hour)) . ":30" : strval($exame->hour).":00"; ?></td>

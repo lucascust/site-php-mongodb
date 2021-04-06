@@ -38,7 +38,7 @@
 
     $DBManager = new MongoDB\Driver\Manager(server);
             
-    $filter = []; 
+    $filter = [ 'emailPatient' => $_COOKIE['paciente'] ]; 
     $query = new MongoDB\Driver\Query($filter); 
         
     $res = $DBManager->executeQuery("planoSaude.consultas", $query);
@@ -54,6 +54,14 @@
     <h3>
         Suas consultas:
     </h3>
+    
+    Você possui 
+    <?php
+    $cursor = $DBManager->executeQuery("planoSaude.consultas", $query);
+    $cursorArray = $cursor->toArray();
+    echo count($cursorArray);
+    ?>
+    consulta(s).
 
     <table id="tabela">
         <thead>
@@ -81,6 +89,14 @@
         Seus Exames:
     </h3>
 
+    Você possui 
+    <?php
+    $cursor = $DBManager->executeQuery("planoSaude.exames", $query);
+    $cursorArray = $cursor->toArray();
+    echo count($cursorArray);
+    ?>
+    exame(s).
+
     <table id="tabela">
         <thead>
             <tr>
@@ -93,7 +109,7 @@
         </thead>
         <tbody> 
         <?php foreach ($resExame as $exame):
-            if($_COOKIE["paciente"] == $exame->emailPaciente):?>
+            if($_COOKIE["paciente"] == $exame->emailPatient):?>
                 <tr>
                     <td><?php echo $exame->nameLab; ?></td>
                     <td><?php echo $exame->exame; ?></td>
@@ -104,7 +120,6 @@
             <?php endif; endforeach; ?>
         </tbody>
     </table>
-
 
     <script src="../JS/buildTable.js"></script>
 

@@ -38,7 +38,7 @@
 
     $DBManager = new MongoDB\Driver\Manager(server);
             
-    $filter = []; 
+    $filter = [ 'emailDoctor'=>$_COOKIE['medico']]; 
     $query = new MongoDB\Driver\Query($filter); 
         
     $res = $DBManager->executeQuery("planoSaude.consultas", $query);
@@ -55,6 +55,14 @@
     <h3>
         Suas consultas marcadas:
     </h3>
+
+    Você possui 
+    <?php
+    $cursor = $DBManager->executeQuery("planoSaude.consultas", $query);
+    $cursorArray = $cursor->toArray();
+    echo count($cursorArray);
+    ?>
+    consulta(s).
 
     <table id="tabela">
         <thead>
