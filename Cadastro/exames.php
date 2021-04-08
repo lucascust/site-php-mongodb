@@ -145,7 +145,7 @@
                 
                 $bulk->insert($doc);
                 
-                $DBManager->executeBulkWrite('planoSaude.consultas', $bulk);
+                $DBManager->executeBulkWrite('planoSaude.exames', $bulk);
 
                 alertBox("Exame marcado com sucesso!");
                 redirect("../Profiles/laboratorios.php");
